@@ -40,7 +40,6 @@ class GetBqTableMap(PTransform):
         client = datastore.Client(self.project_id)
         query = client.query(kind='__kind__')
         query.keys_only()
-        # 下のパイプライン上で直接作るとなぜかエラーが起きるので、一度ここでkeyの配列を作成する
         kinds = [entity.key.id_or_name for entity in query.fetch()]
         return (pbegin
                 | Impulse()
