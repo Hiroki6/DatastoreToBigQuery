@@ -73,10 +73,8 @@ class GetKinds(PTransform):
         from google.cloud import datastore
         from apache_beam import Create
         import logging
-        client = datastore.Client(self.project_id)
-        query = client.query(kind='__kind__')
+        query = datastore.Client(self.project_id).query(kind='__kind__')
         query.keys_only()
         kinds = [entity.key.id_or_name for entity in query.fetch()]
         logging.info("kinds: {}".format(kinds))
-        return (pcoll.pipeline
-                | 'Kind' >> Create(kinds))
+        return pcoll.pipeline | 'Kind' >> Create(kinds)

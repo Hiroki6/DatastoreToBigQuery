@@ -9,7 +9,7 @@ REQUIRED_PACKAGES = [
 ]
 
 setup(
-    name='dataflow-datastore-backup',
+    name='dataflow-ds2bq',
     version='1.0',
     description='My training application package.',
     install_requires=REQUIRED_PACKAGES,

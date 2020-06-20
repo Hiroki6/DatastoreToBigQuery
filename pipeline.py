@@ -37,10 +37,10 @@ def run(argv=None):
         entities = (p
          | 'Get Kinds' >> GetKinds(project_id)
          | 'Create Query' >> beam.ParDo(CreateQuery(project_id))
-         | 'Get Entity' >> beam.ParDo(ReadFromDatastore._QueryFn())
-         | 'Convert Entity' >> beam.Map(convert))
+         | 'Get Entity' >> beam.ParDo(ReadFromDatastore._QueryFn()))
 
         _ = (entities
+             | 'Convert Entity' >> beam.Map(convert)
              | 'BigQuery Load' >> BigQueryBatchFileLoads(destination=lambda row, table_dict: table_dict[row["__key__"]["kind"]],
                                 custom_gcs_temp_location=gcs_dir,
                                 write_disposition='WRITE_TRUNCATE',

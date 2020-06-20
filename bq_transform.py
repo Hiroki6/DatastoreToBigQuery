@@ -37,8 +37,7 @@ class GetBqTableMap(PTransform):
         """
         from google.cloud import datastore
         from apache_beam.transforms import Impulse
-        client = datastore.Client(self.project_id)
-        query = client.query(kind='__kind__')
+        query = datastore.Client(self.project_id).query(kind='__kind__')
         query.keys_only()
         kinds = [entity.key.id_or_name for entity in query.fetch()]
         return (pbegin
