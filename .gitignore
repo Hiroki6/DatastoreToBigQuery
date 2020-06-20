@@ -1,0 +1,10 @@
+**/.idea
+**/*.iml
+**/.DS_Store
+**/dist
+
+**/build
+**/*.egg-info
+**/.python-version
+**/__pycache__
+*.py[cod]
