@@ -1,7 +1,5 @@
 import logging
 
-from ds_transform import convert, CreateQuery, GetKinds
-from bq_transform import GetBqTableMap, get_partition_conf
 import apache_beam as beam
 from apache_beam.options.pipeline_options import PipelineOptions
 
@@ -30,6 +28,8 @@ def run(argv=None):
     gcs_dir = "gs://{}-dataflow/temp/{}".format(project_id, datetime.now().strftime("%Y%m%d%H%M%S"))
 
     with beam.Pipeline(options=options) as p:
+        from transform.datastore import convert, CreateQuery, GetKinds
+        from transform.bigquery import GetBqTableMap, get_partition_conf
         table_names_dict = beam.pvalue.AsDict(
             p | "Get BigQuery Table Map" >> GetBqTableMap(project_id, options.dataset)
         )
